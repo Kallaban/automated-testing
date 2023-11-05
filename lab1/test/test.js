@@ -1,11 +1,11 @@
-const { assert } = require("chai");
+const assert = require("chai").assert;
 const Mtrx = require("mtrx");
 
 describe("Creation", function () {
   it("should create a 1x1 random matrix with no arguments", function () {
     const m = new Mtrx();
-    expect(m.rows).to.equal(1);
-    expect(m.cols).to.equal(1);
+    assert.equal(m.rows, 1);
+    assert.equal(m.cols, 1);
   });
 
   it("should create a 2x2 matrix with specific values", function () {
@@ -13,10 +13,10 @@ describe("Creation", function () {
       [1, 2],
       [3, 4],
     ]);
-    expect(m.rows).to.equal(2);
-    expect(m.cols).to.equal(2);
-    expect(m[0][0]).to.equal(1);
-    expect(m[1][1]).to.equal(4);
+    assert.equal(m.rows, 2);
+    assert.equal(m.cols, 2);
+    assert.equal(m[0][0], 1);
+    assert.equal(m[1][1], 4);
   });
 
   describe("Operation", function () {
@@ -25,7 +25,7 @@ describe("Creation", function () {
         [1, 2],
         [3, 4],
       ]);
-      expect(m[1][1]).to.equal(4);
+      assert.equal(m[1][1], 4);
     });
 
     it("should set elements using array-like notation", function () {
@@ -34,86 +34,86 @@ describe("Creation", function () {
         [3, 4],
       ]);
       m[0][1] = 5;
-      expect(m[0][1]).to.equal(5);
+      assert.equal(m[0][1], 5);
     });
   });
 
   describe("Properties", function () {
     it("should correctly report the number of rows and columns", function () {
       const m1 = new Mtrx(2, 3);
-      expect(m1.rows).to.equal(2);
-      expect(m1.cols).to.equal(3);
+      assert.equal(m1.rows, 2);
+      assert.equal(m1.cols, 3);
 
       const m2 = new Mtrx([
         [1, 2, 3],
         [4, 5, 6],
       ]);
-      expect(m2.rows).to.equal(2);
-      expect(m2.cols).to.equal(3);
+      assert.equal(m2.rows, 2);
+      assert.equal(m2.cols, 3);
     });
 
     it("should calculate the determinant for square matrices", function () {
       const m1 = new Mtrx(2, 2, 4);
-      expect(m1.det).to.equal(16);
+      assert.equal(m1.det, 16);
 
       const m2 = new Mtrx([
         [1, 2],
         [3, 4],
       ]);
-      expect(m2.det).to.equal(-2);
+      assert.equal(m2.det, -2);
     });
 
     it("should return NaN for the determinant if rows and columns are not equal", function () {
       const m = new Mtrx(2, 3);
-      expect(isNaN(m.det)).to.be.true;
+      assert.isNaN(m.det);
     });
 
     it("should calculate the rank of the matrix", function () {
       const m1 = new Mtrx(2, 2, 0);
-      expect(m1.rank).to.equal(0);
+      assert.equal(m1.rank, 0);
 
       const m2 = new Mtrx([
         [1, 0],
         [0, 1],
       ]);
-      expect(m2.rank).to.equal(2);
+      assert.equal(m2.rank, 2);
     });
 
     it("should update rank when matrix elements are changed", function () {
       const m = new Mtrx(2, 2, 1);
-      expect(m.rank).to.equal(2);
+      assert.equal(m.rank, 2);
       m[0][0] = 0;
-      expect(m.rank).to.equal(1);
+      assert.equal(m.rank, 1);
     });
   });
 
   describe("Static Functions", function () {
     it("should create a matrix of zeros with the specified size", function () {
       const m = Mtrx.zeros(3, 4);
-      expect(m.rows).to.equal(3);
-      expect(m.cols).to.equal(4);
-      expect(m[0][0]).to.equal(0);
+      assert.equal(m.rows, 3);
+      assert.equal(m.cols, 4);
+      assert.equal(m[0][0], 0);
     });
 
     it("should create a matrix of ones with the specified size", function () {
       const m = Mtrx.ones(2, 3);
-      expect(m.rows).to.equal(2);
-      expect(m.cols).to.equal(3);
-      expect(m[0][0]).to.equal(1);
+      assert.equal(m.rows, 2);
+      assert.equal(m.cols, 3);
+      assert.equal(m[0][0], 1);
     });
 
     it("should create an identity matrix of the specified size", function () {
       const m = Mtrx.eye(3);
-      expect(m.rows).to.equal(3);
-      expect(m.cols).to.equal(3);
-      expect(m[0][0]).to.equal(1);
+      assert.equal(m.rows, 3);
+      assert.equal(m.cols, 3);
+      assert.equal(m[0][0], 1);
     });
 
     it("should create a diagonal matrix from an array of values", function () {
       const m = Mtrx.diag([2, 4, 6]);
-      expect(m.rows).to.equal(3);
-      expect(m.cols).to.equal(3);
-      expect(m[0][0]).to.equal(2);
+      assert.equal(m.rows, 3);
+      assert.equal(m.cols, 3);
+      assert.equal(m[0][0], 2);
     });
 
     it("should check if an object is a Mtrx object", function () {
@@ -125,8 +125,8 @@ describe("Creation", function () {
         [1, 2],
         [3, 4],
       ];
-      expect(Mtrx.isMtrx(m)).to.be.true;
-      expect(Mtrx.isMtrx(n)).to.be.false;
+      assert.isTrue(Mtrx.isMtrx(m));
+      assert.isFalse(Mtrx.isMtrx(n));
     });
   });
 });
